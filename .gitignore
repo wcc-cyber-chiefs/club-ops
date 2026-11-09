@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+.DS_Store
+# Never commit solutions or plaintext flags to this public repo
+solve.py
+SOLUTION.md
+flag.txt

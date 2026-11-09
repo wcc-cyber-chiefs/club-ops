@@ -1,0 +1,47 @@
+# Discord wiring for club-ops.
+#
+# channels: each bot posts by the short name on the left.
+#   webhook_secret = the GitHub Actions secret that holds that channel's webhook URL
+#   forum: true    = the channel is a Forum channel (each post becomes its own thread)
+#
+# Webhook URLs are secrets. Never paste one into this file or any other file in
+# the repo. See HANDBOOK.md, "Create the webhooks".
+
+timezone: America/Chicago
+
+channels:
+  announcements:
+    webhook_secret: WEBHOOK_ANNOUNCEMENTS
+    forum: false
+  jobs:                       # #jobs-postings
+    webhook_secret: WEBHOOK_JOBS
+    forum: false              # set to true if you convert #jobs-postings to a forum
+  events:                     # #events
+    webhook_secret: WEBHOOK_EVENTS
+    forum: false
+  ncl:                        # #ncl
+    webhook_secret: WEBHOOK_NCL
+    forum: false
+  skills-usa:                 # #skills-usa
+    webhook_secret: WEBHOOK_SKILLSUSA
+    forum: false
+  news:                       # #cyber-news
+    webhook_secret: WEBHOOK_NEWS
+    forum: false
+  challenge:                  # #weekly-challenge (new forum channel)
+    webhook_secret: WEBHOOK_CHALLENGE
+    forum: true
+  mods:                       # #mods (private) - failure alerts
+    webhook_secret: WEBHOOK_MODS
+    forum: false
+
+# Opt-in ping roles. Paste each role's ID (Discord: Settings > Advanced >
+# Developer Mode on, then right-click the role > Copy Role ID).
+# Leave a value empty and the bots simply post without pinging.
+roles:
+  sessions: ""        # @session-pings
+  challenge: ""       # @challenge-pings
+  ctf: ""             # @ctf-pings
+  opportunities: ""   # @opportunity-pings
+  ncl: ""             # optional: an @ncl role
+  skills-usa: ""      # optional: an @skills-usa role

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flag Checker · WCC Cyber Club</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --ink: #14171c; --muted: #5b6370;
+    --line: #d9dde3; --accent: #1f6feb; --good: #1a7f37; --bad: #c4321c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d1117; --card: #161b22; --ink: #e6edf3; --muted: #8b949e;
+            --line: #30363d; --accent: #4493f8; --good: #3fb950; --bad: #f85149; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 560px; margin: 48px auto; padding: 0 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  p.sub { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 16px 0 6px; }
+  select, input, button { width: 100%; font: inherit; padding: 10px 12px; border-radius: 8px;
+         border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+  input { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  button { margin-top: 16px; background: var(--accent); border-color: var(--accent); color: #fff;
+           font-weight: 600; cursor: pointer; }
+  button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #result { margin-top: 16px; min-height: 24px; font-weight: 600; }
+  .good { color: var(--good); } .bad { color: var(--bad); }
+  .note { color: var(--muted); font-size: 13px; margin-top: 20px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1>Weekly Challenge Flag Checker</h1>
+    <p class="sub">WCC Cyber Club. Your flag is hashed in your browser and never sent anywhere.</p>
+
+    <form id="form" autocomplete="off">
+      <label for="challenge">Challenge</label>
+      <select id="challenge" required></select>
+
+      <label for="flag">Flag</label>
+      <input id="flag" placeholder="WCC{...}" required spellcheck="false">
+
+      <button type="submit">Check flag</button>
+    </form>
+    <div id="result" role="status" aria-live="polite"></div>
+
+    <p class="note">Solved it? Post "solved" in the challenge thread on Discord, without the flag.
+      <a href="../">Club home</a></p>
+  </div>
+</main>
+<script>
+  const sel = document.getElementById('challenge');
+  const out = document.getElementById('result');
+  let flags = {};
+
+  async function sha256Hex(text) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  fetch('../flags.json', { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => {
+      flags = data;
+      const slugs = Object.keys(flags).sort().reverse();   // newest first
+      if (!slugs.length) { sel.innerHTML = '<option value="">No challenges released yet</option>'; return; }
+      sel.innerHTML = slugs.map(s => `<option value="${s}">${flags[s].title.replace(/</g, '&lt;')}</option>`).join('');
+      const want = new URLSearchParams(location.search).get('c');
+      if (want && flags[want]) sel.value = want;
+    })
+    .catch(() => { out.textContent = 'Could not load the challenge list. Try again in a minute.'; out.className = 'bad'; });
+
+  document.getElementById('form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const entry = flags[sel.value];
+    if (!entry) return;
+    const guess = document.getElementById('flag').value.trim();
+    const ok = (await sha256Hex(guess)) === entry.sha256;
+    out.textContent = ok ? 'Correct! Nice work.' : 'Not quite. Check the format and try again.';
+    out.className = ok ? 'good' : 'bad';
+  });
+</script>
+</body>
+</html>

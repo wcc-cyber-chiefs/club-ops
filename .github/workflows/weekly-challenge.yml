@@ -1,0 +1,38 @@
+name: Weekly challenge
+
+on:
+  schedule:
+    - cron: "23 15 * * *"   # daily, about 9:23 AM Central: releases and wraps whatever is due
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [challenges/**]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-challenge
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml
+      - name: Release and wrap challenges, rebuild flag list
+        run: python bots/weekly_challenge.py
+        env:
+          WEBHOOK_CHALLENGE: ${{ secrets.WEBHOOK_CHALLENGE }}
+      - name: Save state
+        run: bash bots/commit_state.sh
+      - name: Alert officers on failure
+        if: failure()
+        run: python bots/notify_failure.py
+        env:
+          WEBHOOK_MODS: ${{ secrets.WEBHOOK_MODS }}

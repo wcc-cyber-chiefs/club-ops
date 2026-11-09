@@ -1,0 +1,34 @@
+name: Submission intake
+
+# An officer adds the `approved` label to an opportunity issue -> it posts.
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  run:
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml
+      - name: Post approved submission
+        # The issue body is read from the event file inside Python,
+        # never interpolated into this shell step.
+        run: python bots/intake.py
+        env:
+          WEBHOOK_JOBS: ${{ secrets.WEBHOOK_JOBS }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Alert officers on failure
+        if: failure()
+        run: python bots/notify_failure.py
+        env:
+          WEBHOOK_MODS: ${{ secrets.WEBHOOK_MODS }}

@@ -1,0 +1,62 @@
+# Outside data sources. Every URL here is free and needs no account.
+# August checklist: bump the SimplifyJobs repo names to the next season.
+
+opportunities:
+  # SimplifyJobs publishes one repo per season. Their machine-readable list is
+  # .github/scripts/listings.json on the dev branch. If a URL 404s, open the repo
+  # on GitHub, find listings.json, and paste its "Raw" URL here.
+  sources:
+    - name: Summer 2027 internships
+      url: https://raw.githubusercontent.com/SimplifyJobs/Summer2027-Internships/dev/.github/scripts/listings.json
+      repo: https://github.com/SimplifyJobs/Summer2027-Internships
+    - name: New grad roles
+      url: https://raw.githubusercontent.com/SimplifyJobs/New-Grad-Positions/dev/.github/scripts/listings.json
+      repo: https://github.com/SimplifyJobs/New-Grad-Positions
+
+  # A role is posted when its title matches any include term and no exclude term.
+  include:
+    - security
+    - cyber
+    - soc
+    - threat
+    - detection
+    - incident
+    - vulnerability
+    - appsec
+    - grc
+    - iam
+    - identity
+    - penetration
+    - pentest
+    - forensic
+    - malware
+    - red team
+    - blue team
+  exclude:
+    - physical security
+    - security guard
+    - social security
+
+  max_age_days: 14       # ignore listings older than this
+  max_posts_per_run: 8   # anything beyond this is rolled into one summary line
+
+ctftime:
+  days_ahead: 14
+  beginner_max_weight: 25   # weight 0 means "new event, not rated yet"; also flagged beginner-friendly
+  online_only: true
+  max_events: 15
+
+news:
+  max_items: 8
+  rss:
+    - name: CISA advisories
+      url: https://www.cisa.gov/cybersecurity-advisories/all.xml
+    - name: BleepingComputer
+      url: https://www.bleepingcomputer.com/feed/
+    - name: The Hacker News
+      url: https://feeds.feedburner.com/TheHackersNews
+    - name: Krebs on Security
+      url: https://krebsonsecurity.com/feed/
+  cisa_kev:
+    enabled: true
+    url: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json

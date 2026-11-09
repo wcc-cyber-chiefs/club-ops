@@ -1,0 +1,27 @@
+# Curated opportunities the job feeds won't catch: apprenticeships,
+# scholarships, competitions, local programs, alumni referrals.
+# Each new entry is posted to #jobs-postings once, the next time
+# opportunity-radar runs. Verify every link before adding it.
+#
+# Fields:
+#   id        unique slug, never reuse
+#   title     e.g. "SOC Apprenticeship, Summer 2027"
+#   org       organization offering it
+#   type      internship | apprenticeship | job | scholarship | competition | event
+#   url
+#   deadline  optional YYYY-MM-DD
+#   location  optional
+#   notes     one line: who it's good for
+
+programs: []
+
+# Example:
+#
+#  - id: example-soc-apprenticeship-2027
+#    title: SOC Analyst Apprenticeship
+#    org: Example Bank
+#    type: apprenticeship
+#    url: https://example.com/careers
+#    deadline: 2027-02-01
+#    location: Chicago, IL (hybrid)
+#    notes: Associate's students welcome; posted by an alum.

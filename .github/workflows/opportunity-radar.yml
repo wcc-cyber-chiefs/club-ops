@@ -1,0 +1,38 @@
+name: Opportunity radar
+
+on:
+  schedule:
+    - cron: "17 14 * * *"   # daily, about 8:17 AM Central (GitHub cron is UTC)
+  workflow_dispatch:         # "Run workflow" button in the Actions tab
+  push:
+    branches: [main]
+    paths: [data/programs.yml]   # post newly added programs right after merge
+
+permissions:
+  contents: write
+
+concurrency:
+  group: opportunity-radar
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml
+      - name: Post new opportunities
+        run: python bots/opportunity_radar.py
+        env:
+          WEBHOOK_JOBS: ${{ secrets.WEBHOOK_JOBS }}
+      - name: Save state
+        run: bash bots/commit_state.sh
+      - name: Alert officers on failure
+        if: failure()
+        run: python bots/notify_failure.py
+        env:
+          WEBHOOK_MODS: ${{ secrets.WEBHOOK_MODS }}

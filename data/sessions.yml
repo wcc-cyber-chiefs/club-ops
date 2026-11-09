@@ -1,0 +1,25 @@
+# Club sessions. The bot posts in #announcements about 3 days before and
+# again about 1 hour before each session, pinging @session-pings.
+#
+# Fields:
+#   id            unique slug, e.g. 2026-11-18-aitm
+#   title
+#   start         "YYYY-MM-DD HH:MM" in club time (America/Chicago)
+#   duration_min  default 60
+#   where         e.g. "Virtual Meetings stage on Discord"
+#   presenter     optional
+#   description   one or two sentences
+#   event_url     optional: link to the Discord event (right-click event > Copy Event Link)
+
+sessions: []
+
+# Example:
+#
+#  - id: 2026-11-18-aitm-phishing
+#    title: AiTM Phishing Explained
+#    start: "2026-11-18 18:00"
+#    duration_min: 60
+#    where: Virtual Meetings stage on Discord
+#    presenter: Kevin
+#    description: How reverse-proxy phishing steals session cookies, and what defenders can see.
+#    event_url: ""

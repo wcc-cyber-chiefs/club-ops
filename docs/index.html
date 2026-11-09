@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCC Cyber Club</title>
+<style>
+  :root { --bg: #f6f7f9; --card: #ffffff; --ink: #14171c; --muted: #5b6370; --line: #d9dde3; --accent: #1f6feb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d1117; --card: #161b22; --ink: #e6edf3; --muted: #8b949e; --line: #30363d; --accent: #4493f8; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 680px; margin: 48px auto; padding: 0 16px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  p.lead { color: var(--muted); margin: 0 0 28px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  a.tile { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+           padding: 16px; color: var(--ink); text-decoration: none; }
+  a.tile:hover, a.tile:focus-visible { border-color: var(--accent); outline: none; }
+  a.tile strong { display: block; margin-bottom: 4px; }
+  a.tile span { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>WCC Cyber Club</h1>
+  <p class="lead">Weekly challenges, CTF teams, career leads and hands-on security sessions.
+    Everything here is run by club members and free to use.</p>
+  <div class="grid">
+    <a class="tile" href="check/"><strong>Flag checker</strong><span>Check this week's challenge flag</span></a>
+    <a class="tile" href="../"><strong>Club repo</strong><span>Challenges, schedules and the bots that run the Discord</span></a>
+  </div>
+</main>
+<script>
+  // Point "Club repo" at the GitHub repo this site is published from.
+  const [owner] = location.hostname.split('.');
+  const repo = location.pathname.split('/').filter(Boolean)[0];
+  if (owner && repo) document.querySelectorAll('a.tile')[1].href = `https://github.com/${owner}/${repo}`;
+</script>
+</body>
+</html>

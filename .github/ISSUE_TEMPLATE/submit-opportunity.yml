@@ -1,0 +1,52 @@
+name: Share an opportunity
+description: Internship, apprenticeship, job, scholarship, competition or event worth posting to #jobs-postings.
+title: "[Opportunity] "
+labels: [opportunity]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        An officer reviews each submission. Once it gets the `approved` label, the bot posts it to Discord and closes this issue.
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      placeholder: SOC Analyst Intern, Summer 2027
+    validations:
+      required: true
+  - type: input
+    id: organization
+    attributes:
+      label: Organization
+      placeholder: Company, school or program name
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options: [Internship, Apprenticeship, Job, Scholarship, Competition, Event, Other]
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link
+      description: Full URL to the posting (https://...)
+    validations:
+      required: true
+  - type: input
+    id: deadline
+    attributes:
+      label: Deadline
+      placeholder: 2027-02-01, or "rolling"
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      placeholder: Chicago, IL / Remote
+  - type: textarea
+    id: fit
+    attributes:
+      label: Why it's a good fit
+      description: One or two sentences. Who should apply?

@@ -1,0 +1,32 @@
+name: Pitch a weekly challenge
+description: Have an idea for a weekly challenge? Pitch it here; an officer helps turn it into a pull request.
+title: "[Challenge idea] "
+labels: [challenge-idea]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Working title
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options: [Crypto / encoding, Forensics, Web, OSINT, Log analysis / blue team, Networking, Reverse engineering, Misc]
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty
+      options: [Beginner (under 30 min), Intermediate, Advanced]
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What does the solver do? Do NOT put the flag or the full solution here; this repo is public.
+    validations:
+      required: true

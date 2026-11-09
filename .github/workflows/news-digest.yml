@@ -1,0 +1,35 @@
+name: News digest
+
+on:
+  schedule:
+    - cron: "47 13 * * *"   # daily, about 7:47 AM Central
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: news-digest
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install --quiet pyyaml
+      - name: Post news digest
+        run: python bots/news_digest.py
+        env:
+          WEBHOOK_NEWS: ${{ secrets.WEBHOOK_NEWS }}
+      - name: Save state
+        run: bash bots/commit_state.sh
+      - name: Alert officers on failure
+        if: failure()
+        run: python bots/notify_failure.py
+        env:
+          WEBHOOK_MODS: ${{ secrets.WEBHOOK_MODS }}

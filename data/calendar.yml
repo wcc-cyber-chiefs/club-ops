@@ -1,0 +1,33 @@
+# Deadlines and dates the bots remind people about.
+#
+# Each entry is posted at 14, 3 and 1 days before `date` unless you set
+# remind_days. Add things by pull request; the validate check catches typos.
+#
+# Fields:
+#   id          short unique slug, never change it after it has posted
+#   title       what people see
+#   date        YYYY-MM-DD (the deadline or event day)
+#   channel     announcements | ncl | skills-usa | events | jobs
+#   role        optional ping role key from discord.yml (ncl, skills-usa, ctf, opportunities, sessions)
+#   url         where to sign up or read more
+#   notes       one line of context
+#   remind_days optional list, e.g. [7, 1]
+
+items: []
+
+# Examples (copy one above the line, remove the leading "# ", fill in real dates):
+#
+#  - id: ncl-spring-2027-registration
+#    title: NCL Spring 2027 registration closes
+#    date: 2027-01-30
+#    channel: ncl
+#    role: ncl
+#    url: https://nationalcyberleague.org/
+#    notes: Ask an officer if you need a voucher.
+#
+#  - id: skillsusa-state-2027
+#    title: SkillsUSA state competition sign-up
+#    date: 2027-02-15
+#    channel: skills-usa
+#    role: skills-usa
+#    url: https://www.skillsusa.org/
