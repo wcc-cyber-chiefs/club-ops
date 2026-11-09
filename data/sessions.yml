@@ -11,15 +11,32 @@
 #   description   one or two sentences
 #   event_url     optional: link to the Discord event (right-click event > Copy Event Link)
 
-sessions: []
 
-# Example:
-#
-#  - id: 2026-11-18-aitm-phishing
-#    title: AiTM Phishing Explained
-#    start: "2026-11-18 18:00"
-#    duration_min: 60
-#    where: Virtual Meetings stage on Discord
-#    presenter: Kevin
-#    description: How reverse-proxy phishing steals session cookies, and what defenders can see.
-#    event_url: ""
+sessions:
+  - id: 2026-11-11-session
+    title: Weekly club session
+    start: "2026-11-11 17:15"
+    duration_min: 60
+    where: Google Meet
+    description: Weekly Cyber Chiefs session. Meet link is pinned in announcements.
+
+  - id: 2026-11-18-session
+    title: Weekly club session
+    start: "2026-11-18 17:15"
+    duration_min: 60
+    where: Google Meet
+    description: Weekly Cyber Chiefs session. Meet link is pinned in announcements.
+
+  - id: 2026-12-02-session
+    title: Weekly club session
+    start: "2026-12-02 17:15"
+    duration_min: 60
+    where: Google Meet
+    description: Weekly Cyber Chiefs session. Meet link is pinned in announcements.
+
+  - id: 2026-12-09-session
+    title: Weekly club session
+    start: "2026-12-09 17:15"
+    duration_min: 60
+    where: Google Meet
+    description: Weekly Cyber Chiefs session. Meet link is pinned in announcements.
