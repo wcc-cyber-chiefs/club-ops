@@ -30,14 +30,15 @@
     Everything here is run by club members and free to use.</p>
   <div class="grid">
     <a class="tile" href="check/"><strong>Flag checker</strong><span>Check this week's challenge flag</span></a>
-    <a class="tile" href="../"><strong>Club repo</strong><span>Challenges, schedules and the bots that run the Discord</span></a>
+    <a class="tile" href="https://wcc-cyber-chiefs.github.io/xp/"><strong>XP leaderboard</strong><span>Earn XP, level up and unlock badges. Join free with a GitHub account</span></a>
+    <a class="tile" id="repo-tile" href="../"><strong>Club repo</strong><span>Challenges, schedules and the bots that run the Discord</span></a>
   </div>
 </main>
 <script>
   // Point "Club repo" at the GitHub repo this site is published from.
   const [owner] = location.hostname.split('.');
   const repo = location.pathname.split('/').filter(Boolean)[0];
-  if (owner && repo) document.querySelectorAll('a.tile')[1].href = `https://github.com/${owner}/${repo}`;
+  if (owner && repo) document.getElementById('repo-tile').href = `https://github.com/${owner}/${repo}`;
 </script>
 </body>
 </html>
